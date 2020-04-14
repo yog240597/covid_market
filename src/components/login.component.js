@@ -5,7 +5,7 @@ export default class Login extends Component {
     constructor(props){
       super(props);
       this.state = {
-        username: '',
+        email: '',
         password:''
       
       }
@@ -21,25 +21,21 @@ export default class Login extends Component {
     handleSubmit(e) {
         
         e.preventDefault();
-        console.log( this.state.username);
+        console.log( this.state.email);
         console.log( this.state.password);
 
     fetch('http://ec2-13-232-58-108.ap-south-1.compute.amazonaws.com:9000/api/v1/login/', {
        method: 'POST',
        headers:{ 'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*" },
        body: JSON.stringify({
-        username: this.state.username,
+        email: this.state.email,
         password: this.state.password
          })
      })
       .then(res => res.json())
       .then(data => {
-        if (data[0] == "error"){
-          alert("Enter valid username or password")
-        }
-        else{
-         this.props.history.push('/home')
-        }
+        console.log("sta",data)
+        this.props.history.push('/home')
         
       })
       .catch(err => {
@@ -47,14 +43,16 @@ export default class Login extends Component {
       });
     }
 
+
+
     render() {
         return (
             <form>
                 <h3>Sign In</h3>
 
                 <div className="form-group">
-                    <label>Username</label>
-                    <input type="text" value={this.state.username} name="username" className="form-control" onChange={this.onChange.bind(this)} placeholder="Enter " />
+                    <label>Email</label>
+                    <input type="text" value={this.state.email} name="email" className="form-control" onChange={this.onChange.bind(this)} placeholder="Enter " />
                 </div>
 
                 <div className="form-group">
